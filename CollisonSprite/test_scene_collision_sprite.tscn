@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bpoosarfwiv0v"]
+
+[ext_resource type="Script" uid="uid://bqcux5gapw1na" path="res://CollisonSprite/CollisonSprite.gd" id="1_ku4aq"]
+[ext_resource type="Texture2D" uid="uid://cevrrjw01pkg1" path="res://CollisonSprite/test sprites/test_4.png" id="2_4spxj"]
+
+[node name="Node2D" type="Node2D" unique_id=1313887759]
+texture_filter = 1
+
+[node name="CollisonSprite2D" type="CollisionPolygon2D" parent="." unique_id=874418763]
+texture_filter = 1
+polygon = PackedVector2Array(-6, -1, -6, -2, -5, -4, -3, -6, 2, -6, 4, -5, 6, -3, 6, 0, 3, 5, 2, 6, -2, 6, -5, 3, -6, 1, -6, -1)
+script = ExtResource("1_ku4aq")
+texture = ExtResource("2_4spxj")
+metadata/_custom_type_script = "uid://bqcux5gapw1na"
