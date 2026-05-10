@@ -3,36 +3,41 @@ extends CollisionPolygon2D
 class_name CollisonSprite2D
 
 @export var texture:Texture2D
+@export var display_texture:bool:
+	set(new_value):
+		display_texture = new_value
+		if display_texture:
+			_ready()
+		elif canvas_item_rid:
+			RenderingServer.free_rid(canvas_item_rid)
+
 var canvas_item_rid:RID
 
 @export_tool_button("Generate Smooth Convex Polygon", "CollisionPolygon2D") var generate_polygon_action = generate_convex_polygon
 @export_tool_button("Generate Smooth Concave Polygon", "CollisionPolygon2D") var generate_smooth_concave_action = generate_smooth_concave_polygon
 @export_tool_button("Generate Concave Polygon", "ConvexPolygonShape2D") var generate_concave_action = generate_concave_polygon
 
-@export var shadow:Polygon2D 
 
 func _ready() -> void:
 	
-	#creates canvas item for sprite
-	if canvas_item_rid != null:
-		RenderingServer.free_rid(canvas_item_rid)
+	if display_texture:
+		#creates canvas item for sprite
+		if canvas_item_rid != null:
+			RenderingServer.free_rid(canvas_item_rid)
+			
+		canvas_item_rid = RenderingServer.canvas_item_create()
+		RenderingServer.canvas_item_set_parent(canvas_item_rid, get_canvas())
+		RenderingServer.canvas_item_set_visibility_layer(canvas_item_rid, -1)
 		
-	canvas_item_rid = RenderingServer.canvas_item_create()
-	RenderingServer.canvas_item_set_parent(canvas_item_rid, get_canvas())
-	RenderingServer.canvas_item_set_visibility_layer(canvas_item_rid, -1)
-	
-	#sets the texture position,rotation and then draws the sprite
-	update_sprite()
+		#sets the texture position,rotation and then draws the sprite
+		update_sprite()
 
 	pass
 	
 func _process(delta: float) -> void:
-	
-	
-
-	
-	#update the texture position, rotation and then redraws the sprite
-	update_sprite()
+	if display_texture:
+		#update the texture position, rotation and then redraws the sprite
+		update_sprite()
 
 func generate_convex_polygon():
 	
@@ -227,9 +232,9 @@ func get_rect() -> Rect2:
 
 
 func _enter_tree() -> void:
-	if Engine.is_editor_hint():
+	if Engine.is_editor_hint() && display_texture:
 		_ready()
 	
 func _exit_tree() -> void:
-	RenderingServer.free_rid(canvas_item_rid)
-	pass
+	if canvas_item_rid:
+		RenderingServer.free_rid(canvas_item_rid)
