@@ -1,3 +1,27 @@
 [gd_scene format=3 uid="uid://dde7ypf1lhv07"]
 
+[ext_resource type="Script" uid="uid://rpieu4mvm4ba" path="res://DraggableArea2D/DraggableArea2D.gd" id="2_bwh4a"]
+[ext_resource type="Script" uid="uid://bqcux5gapw1na" path="res://CollisonSprite/CollisonSprite.gd" id="3_aby2n"]
+[ext_resource type="Texture2D" uid="uid://fq1ylhntaoy3" path="res://test_sprites/test_box.png" id="3_gdnye"]
+
 [node name="TestSceneDraggableArea2d" type="Node2D" unique_id=1985552336]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1854689194]
+zoom = Vector2(4, 4)
+
+[node name="Node2D" type="Node2D" parent="." unique_id=905543626]
+
+[node name="DraggableArea2D" type="Area2D" parent="Node2D" unique_id=1555106127 node_paths=PackedStringArray("sprite")]
+script = ExtResource("2_bwh4a")
+sprite = NodePath("Sprite2D")
+grab_action = null
+metadata/_custom_type_script = "uid://rpieu4mvm4ba"
+
+[node name="CollisonSprite2D" type="CollisionPolygon2D" parent="Node2D/DraggableArea2D" unique_id=1748868250]
+polygon = PackedVector2Array(-16, -14, -16, -15, -15, -16, 15, -16, 16, -15, 16, 15, 15, 16, -15, 16, -16, 15, -16, -14)
+script = ExtResource("3_aby2n")
+texture = ExtResource("3_gdnye")
+metadata/_custom_type_script = "uid://bqcux5gapw1na"
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D/DraggableArea2D" unique_id=1333343033]
+texture = ExtResource("3_gdnye")
