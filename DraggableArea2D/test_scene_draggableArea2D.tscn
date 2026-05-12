@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://rpieu4mvm4ba" path="res://DraggableArea2D/DraggableArea2D.gd" id="2_bwh4a"]
 [ext_resource type="Script" uid="uid://bqcux5gapw1na" path="res://CollisonSprite/CollisonSprite.gd" id="3_aby2n"]
 [ext_resource type="Texture2D" uid="uid://fq1ylhntaoy3" path="res://test_sprites/test_box.png" id="3_gdnye"]
+[ext_resource type="PackedScene" uid="uid://cqkbu6vq1tnnb" path="res://DraggableArea2D/test_resources/drop_particles.tscn" id="4_bwh4a"]
+[ext_resource type="AudioStream" uid="uid://bnu12uhhlx2xh" path="res://DraggableArea2D/test_resources/467056__kelsey_w__glass-place.wav" id="5_aby2n"]
 
 [node name="TestSceneDraggableArea2d" type="Node2D" unique_id=1985552336]
 
@@ -11,12 +13,16 @@ zoom = Vector2(4, 4)
 
 [node name="Node2D" type="Node2D" parent="." unique_id=905543626]
 
-[node name="DraggableArea2D" type="Area2D" parent="Node2D" unique_id=1555106127 node_paths=PackedStringArray("sprite")]
+[node name="DraggableArea2D" type="Area2D" parent="Node2D" unique_id=1555106127 node_paths=PackedStringArray("sprite", "particles")]
 script = ExtResource("2_bwh4a")
 sprite = NodePath("Sprite2D")
 rotate_action = null
 rotation_speed = null
 degree_per_rotate = null
+particles = NodePath("drop_particles")
+scale_particles_to_sprite = true
+scale_factor = 1.5
+random_pitch_range = null
 metadata/_custom_type_script = "uid://rpieu4mvm4ba"
 
 [node name="CollisonSprite2D" type="CollisionPolygon2D" parent="Node2D/DraggableArea2D" unique_id=1748868250]
@@ -28,10 +34,17 @@ metadata/_custom_type_script = "uid://bqcux5gapw1na"
 [node name="Sprite2D" type="Sprite2D" parent="Node2D/DraggableArea2D" unique_id=1333343033]
 texture = ExtResource("3_gdnye")
 
-[node name="DraggableArea2D2" type="Area2D" parent="Node2D" unique_id=1113267321 node_paths=PackedStringArray("sprite")]
+[node name="drop_particles" parent="Node2D/DraggableArea2D" unique_id=1538847477 instance=ExtResource("4_bwh4a")]
+
+[node name="DraggableArea2D2" type="Area2D" parent="Node2D" unique_id=1113267321 node_paths=PackedStringArray("sprite", "audio_stream_player")]
 position = Vector2(-24, -4)
 script = ExtResource("2_bwh4a")
 sprite = NodePath("Sprite2D")
+scale_particles_to_sprite = null
+scale_factor = null
+audio_stream_player = NodePath("AudioStreamPlayer2D")
+audio_stream = ExtResource("5_aby2n")
+random_pitch_range = 0.05
 metadata/_custom_type_script = "uid://rpieu4mvm4ba"
 
 [node name="CollisonSprite2D" type="CollisionPolygon2D" parent="Node2D/DraggableArea2D2" unique_id=1415170218]
@@ -42,3 +55,6 @@ metadata/_custom_type_script = "uid://bqcux5gapw1na"
 
 [node name="Sprite2D" type="Sprite2D" parent="Node2D/DraggableArea2D2" unique_id=1943636071]
 texture = ExtResource("3_gdnye")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Node2D/DraggableArea2D2" unique_id=1879044227]
+pitch_scale = 0.49

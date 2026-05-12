@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://cqkbu6vq1tnnb"]
+
+[ext_resource type="Texture2D" uid="uid://bnu5svb6h4vvk" path="res://test_sprites/Sprite-0001.png" id="1_uidih"]
+
+[sub_resource type="Curve" id="Curve_qdc7l"]
+_data = [Vector2(0, 1), 0.0, 0.25299868, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_7p70q"]
+curve = SubResource("Curve_qdc7l")
+
+[sub_resource type="Curve" id="Curve_rsveq"]
+_limits = [-360.0, 360.0, 0.0, 1.0]
+_data = [Vector2(0.009363294, 328.9792), 0.0, -384.11813, 0, 0, Vector2(1, 76.67694), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_8i5n4"]
+curve = SubResource("Curve_rsveq")
+
+[sub_resource type="Curve" id="Curve_0hol4"]
+_limits = [0.0, 10.0, 0.0, 1.0]
+_data = [Vector2(0, 4.858595), 0.0, -13.257349, 0, 0, Vector2(0.25093633, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_q6r6c"]
+curve = SubResource("Curve_0hol4")
+
+[sub_resource type="Curve" id="Curve_2v8cs"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.24458683), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_alluo"]
+curve = SubResource("Curve_2v8cs")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_kdubu"]
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 1.0
+emission_ring_cone_angle = 90.0
+angle_min = -325.4
+angle_max = 233.10002
+direction = Vector3(0, 0, 0)
+angular_velocity_min = 0.9999839
+angular_velocity_max = 0.9999839
+angular_velocity_curve = SubResource("CurveTexture_8i5n4")
+radial_velocity_min = 9.999977
+radial_velocity_max = 9.999977
+radial_velocity_curve = SubResource("CurveTexture_q6r6c")
+gravity = Vector3(0, 0, 0)
+scale_min = 0.25
+scale_curve = SubResource("CurveTexture_alluo")
+alpha_curve = SubResource("CurveTexture_7p70q")
+
+[node name="drop_particles" type="GPUParticles2D" unique_id=1538847477]
+z_index = -1
+emitting = false
+amount = 10
+texture = ExtResource("1_uidih")
+one_shot = true
+explosiveness = 0.9
+process_material = SubResource("ParticleProcessMaterial_kdubu")

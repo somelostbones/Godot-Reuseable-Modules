@@ -17,6 +17,8 @@ class_name DraggableArea2D
 @export_category("Effects")
 
 @export var particles:GPUParticles2D
+@export var scale_particles_to_sprite:bool = false
+@export var scale_factor:float = 1
 @export var audio_stream_player:AudioStreamPlayer2D
 @export var audio_stream:AudioStream
 @export var random_pitch_range:float
@@ -39,6 +41,13 @@ func _ready() -> void:
 	var viewport = get_viewport()
 	viewport.physics_object_picking_first_only = true
 	viewport.physics_object_picking_sort = true
+	
+	if particles != null && scale_particles_to_sprite:
+		if sprite == null:
+			push_error("scaling particles requires a sprite to scale too")
+		else:
+			particles.scale = (sprite.get_rect().size/2) * scale_factor
+		
 	
 	dropped.connect(on_dropped)
 	pass 
@@ -71,7 +80,7 @@ func on_dropped():
 	
 	if audio_stream_player != null && audio_stream != null:
 		audio_stream_player.stream = audio_stream
-		audio_stream_player.pitch_scale = randf_range(-random_pitch_range, random_pitch_range)
+		audio_stream_player.pitch_scale = randf_range(1-random_pitch_range, 1+random_pitch_range)
 		audio_stream_player.play()
 
 func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void:
@@ -84,12 +93,13 @@ func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void
 		target_rotation = target_rotation + deg_to_rad(degree_per_rotate)
 		
 func _input(event: InputEvent) -> void:
-	var is_mouse_button = event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_LEFT 
-	if (grab_action == "" && is_mouse_button && !event.pressed) || (grab_action != "" && event.is_action_released(grab_action)):
-		is_dragging = false
-		position_grabbed = Vector2.ZERO
-		dropped.emit()
-		pass
+	if is_dragging:
+		var is_mouse_button = event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_LEFT 
+		if (grab_action == "" && is_mouse_button && !event.pressed) || (grab_action != "" && event.is_action_released(grab_action)) :
+			is_dragging = false
+			position_grabbed = Vector2.ZERO
+			dropped.emit()
+			pass
 	
 
 func _get_configuration_warnings() -> PackedStringArray:
